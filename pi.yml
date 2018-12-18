@@ -1,0 +1,32 @@
+#!/usr/bin/env ansible-playbook
+---
+- hosts: pi
+  tasks:
+  - name: gpiozero python libs
+    become: yes
+    become_method: sudo
+    apt: pkg= {{ item }} state=latest
+    with_items:
+      - python-gpiozero
+      - python3-gpiozero
+
+- hosts: pi2
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Copy VPN LED python script
+    copy:
+      src: files/vpnled.py
+      dest: /usr/local/bin/vpnled.py
+      mode: 0755
+  - name: VPN LED service file
+    copy:
+      src: files/vpnled.service
+      dest: /lib/systemd/system/vpnled.service
+      mode: 0644
+  - name: Enable VPN LED service on startup
+    systemd:
+      name: vpnled
+      state: started
+      enabled: yes
+    

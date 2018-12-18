@@ -1,0 +1,10 @@
+[Unit]
+Description=Light up LED when using VPNC
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python3 /usr/local/bin/vpnled.py
+
+[Install]
+WantedBy=multi-user.target
