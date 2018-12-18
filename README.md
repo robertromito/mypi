@@ -1,2 +1,2 @@
 # mypi
-My Rasperry Pi Playground
+My Raspberry Pi Playground
